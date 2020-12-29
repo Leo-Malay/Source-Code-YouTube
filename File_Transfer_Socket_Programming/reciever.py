@@ -13,11 +13,14 @@ except:
     print("Unable to connect")
     exit(0)
 
-data = sock.recv(100).decode()
-file_name, file_size = data.split(",")
-file = open("./rec/" + file_name, "wb")
-data = sock.recv(int(file_size))
-file.write(data)
-file.close()
-
+file_name = sock.recv(100).decode()
+file_size = sock.recv(100).decode()
+with open("./rec/" + file_name, "wb") as file:
+    c = 0
+    print("Recieving file")
+    while c != file_size:
+        data = sock.recv(1024)
+        file.write(data)
+        c += len(data)
+    print("File recieved")
 sock.close()
