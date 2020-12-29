@@ -13,16 +13,11 @@ except:
     print("Unable to connect")
     exit(0)
 
-data = ""
-while data != "#EXIT$":
-    data = sock.recv(1024).decode()
-    if data == "#EXIT$":
-        break
-    data = data.split("#NEXT$")
-    file_name, file_size = data[0], int(data[1])
-    file = open("./rec/" + file_name, "wb")
-    data = sock.recv(file_size)
-    file.write(data)
-    file.close()
+data = sock.recv(100).decode()
+file_name, file_size = data.split(",")
+file = open("./rec/" + file_name, "wb")
+data = sock.recv(int(file_size))
+file.write(data)
+file.close()
 
 sock.close()
