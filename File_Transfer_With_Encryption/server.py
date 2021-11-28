@@ -27,7 +27,6 @@ with open(file_name, "rb") as file:
     start_time = time.time()
 
     # Running loop while c != file_size.
-    d = 0
     while c <= file_size:
         data = file.read(1024)
         if not (data):
@@ -35,7 +34,6 @@ with open(file_name, "rb") as file:
         enc_data = encrypt(data)
         client.sendall(enc_data)
         c += len(data)
-        d += len(enc_data)
 
     # Ending the time capture.
     end_time = time.time()
